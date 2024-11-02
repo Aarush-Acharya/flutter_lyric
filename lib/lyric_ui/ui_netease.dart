@@ -15,32 +15,43 @@ class UINetease extends LyricUI {
   LyricBaseLine lyricBaseLine;
   bool highlight;
   HighlightDirection highlightDirection;
-
-  UINetease(
-      {this.defaultSize = 18,
-      this.defaultExtSize = 14,
-      this.otherMainSize = 16,
-      this.bias = 0.5,
-      this.lineGap = 25,
-      this.inlineGap = 25,
-      this.lyricAlign = LyricAlign.CENTER,
-      this.lyricBaseLine = LyricBaseLine.CENTER,
-      this.highlight = true,
-      this.highlightDirection = HighlightDirection.LTR});
+  Color highlightColor;
+  TextStyle playingMainTextStyle;
+  TextStyle otherMainTextStyle;
+  UINetease({
+    this.defaultSize = 18,
+    this.defaultExtSize = 14,
+    this.otherMainSize = 16,
+    this.bias = 0.5,
+    this.lineGap = 25,
+    this.inlineGap = 25,
+    this.lyricAlign = LyricAlign.CENTER,
+    this.lyricBaseLine = LyricBaseLine.CENTER,
+    this.highlight = true,
+    this.highlightColor = Colors.amber,
+    this.highlightDirection = HighlightDirection.LTR,
+    TextStyle? playingMainTextStyle,
+    TextStyle? otherMainTextStyle,
+  })  : playingMainTextStyle = playingMainTextStyle ??
+            TextStyle(color: Colors.white, fontSize: defaultSize),
+        otherMainTextStyle = otherMainTextStyle ??
+            TextStyle(color: Colors.grey[200], fontSize: otherMainSize);
 
   UINetease.clone(UINetease uiNetease)
       : this(
-          defaultSize: uiNetease.defaultSize,
-          defaultExtSize: uiNetease.defaultExtSize,
-          otherMainSize: uiNetease.otherMainSize,
-          bias: uiNetease.bias,
-          lineGap: uiNetease.lineGap,
-          inlineGap: uiNetease.inlineGap,
-          lyricAlign: uiNetease.lyricAlign,
-          lyricBaseLine: uiNetease.lyricBaseLine,
-          highlight: uiNetease.highlight,
-          highlightDirection: uiNetease.highlightDirection,
-        );
+            defaultSize: uiNetease.defaultSize,
+            defaultExtSize: uiNetease.defaultExtSize,
+            otherMainSize: uiNetease.otherMainSize,
+            bias: uiNetease.bias,
+            lineGap: uiNetease.lineGap,
+            inlineGap: uiNetease.inlineGap,
+            lyricAlign: uiNetease.lyricAlign,
+            lyricBaseLine: uiNetease.lyricBaseLine,
+            highlight: uiNetease.highlight,
+            highlightDirection: uiNetease.highlightDirection,
+            highlightColor: uiNetease.highlightColor,
+            playingMainTextStyle: uiNetease.playingMainTextStyle,
+            otherMainTextStyle: uiNetease.otherMainTextStyle);
 
   @override
   TextStyle getPlayingExtTextStyle() =>
@@ -53,14 +64,13 @@ class UINetease extends LyricUI {
       );
 
   @override
-  TextStyle getOtherMainTextStyle() =>
-      TextStyle(color: Colors.grey[200], fontSize: otherMainSize);
+  TextStyle getOtherMainTextStyle() => otherMainTextStyle;
 
   @override
-  TextStyle getPlayingMainTextStyle() => TextStyle(
-        color: Colors.white,
-        fontSize: defaultSize,
-      );
+  TextStyle getPlayingMainTextStyle() => playingMainTextStyle;
+
+  @override
+  Color getLyricHightlightColor() => highlightColor;
 
   @override
   double getInlineSpace() => inlineGap;
